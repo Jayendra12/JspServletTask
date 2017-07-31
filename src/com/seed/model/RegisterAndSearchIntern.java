@@ -74,9 +74,10 @@ public class RegisterAndSearchIntern {
 	}
 	public ArrayList<Intern> searchByTrackAndBatch(String batch,String track){
 		System.out.println(con);
+		System.out.println(batch);
 		System.out.println(track);
 		try {
-			PreparedStatement stmt=con.prepareStatement("select * from intern where track='"+batch+"'and track='"+track+"'");
+			PreparedStatement stmt=con.prepareStatement("select * from intern where track='"+track+"'and batch='"+batch+"'");
 			
 			ResultSet rs=stmt.executeQuery();
 			batchAndTrackList=new ArrayList<Intern>();
@@ -90,7 +91,7 @@ public class RegisterAndSearchIntern {
 				intern.setBatch(rs.getString("batch"));
 				intern.setTrack(rs.getString("track"));
 				System.out.println(intern.toString());
-				trackList.add(intern);
+				batchAndTrackList.add(intern);
 				
 			}
 			System.out.println(batchAndTrackList.size());

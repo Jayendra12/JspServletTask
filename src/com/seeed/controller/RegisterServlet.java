@@ -1,13 +1,17 @@
 package com.seeed.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.seed.bean.Intern;
+import com.seed.model.RegisterAndSearchIntern;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -28,18 +32,43 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String batch=request.getParameter("batch");
+		String track=request.getParameter("track");
+		RegisterAndSearchIntern searchIntern=new RegisterAndSearchIntern();
 		
-		String fname=request.getParameter("first_name");
-		String lname=request.getParameter("last_name");
-		String dname=request.getParameter("department");
-		String uname=request.getParameter("user_name");
-		String upass=request.getParameter("user_password");
-		String cpass=request.getParameter("confirm_password");
+		/*String name=request.getParameter("name");
+		String contactNo=request.getParameter("contactNo");
+		String batch=request.getParameter("batch");
+		String track=request.getParameter("track");
 		String email=request.getParameter("email");
-		String contact=request.getParameter("contact_no");
-		Intern intern=new Intern();
+		String asn=request.getParameter("asn");
+		String gender=request.getParameter("gender");*/
 		
-		System.out.println(fname+" "+lname);
+		Intern intern=new Intern();
+		if((!track.equals("---select---"))&&(!batch.equals("---select---"))){
+			ArrayList<Intern> trackAndTrackInterns= searchIntern.searchByTrackAndBatch(batch, track);
+			HttpSession session=request.getSession();
+			session.setAttribute("trackAndTrackInterns", trackAndTrackInterns);
+			System.out.println(trackAndTrackInterns.size());
+			
+		}
+		if((batch!="---select---")&&(track.equals("---select---"))){
+			ArrayList<Intern> batchInterns= searchIntern.searchByBatch(batch);
+			HttpSession session=request.getSession();
+			session.setAttribute("batchInterns", batchInterns);
+			System.out.println(batchInterns.size());
+
+			
+		}
+		if((track!="---select---")&&(batch.equals("---select---"))){
+			ArrayList<Intern> trackInterns= searchIntern.searchByTrack(track);
+			HttpSession session=request.getSession();
+			session.setAttribute("trackInterns", trackInterns);
+			System.out.println(trackInterns.size());
+			
+		}
+		
+		response.sendRedirect("Search.jsp");
 	}
 
 	/**
