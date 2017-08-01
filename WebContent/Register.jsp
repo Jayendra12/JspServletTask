@@ -144,6 +144,18 @@
 
 </fieldset>
 </form>
+<% 
+Boolean b=(Boolean)session.getAttribute("emailExists");
+if(b!=null){
+	System.out.print(b);
+	System.out.print("inside");
+%>
+emailId exists
+<% 
+}
+%>
+
+
 </div>
     </div><!-- /.container -->
 

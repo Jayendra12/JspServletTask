@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.omg.CORBA.INTERNAL;
+
 import com.seed.bean.Intern;
 import com.seed.model.RegisterAndSearchIntern;
 
@@ -36,13 +38,6 @@ public class RegisterServlet extends HttpServlet {
 		String track=request.getParameter("track");
 		RegisterAndSearchIntern searchIntern=new RegisterAndSearchIntern();
 		
-		/*String name=request.getParameter("name");
-		String contactNo=request.getParameter("contactNo");
-		String batch=request.getParameter("batch");
-		String track=request.getParameter("track");
-		String email=request.getParameter("email");
-		String asn=request.getParameter("asn");
-		String gender=request.getParameter("gender");*/
 		
 		Intern intern=new Intern();
 		if((!track.equals("---select---"))&&(!batch.equals("---select---"))){
@@ -75,8 +70,22 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		Intern intern=new Intern();
+        RegisterAndSearchIntern  ri=new RegisterAndSearchIntern();
+        HttpSession session=request.getSession();
+		/*String name=request.getParameter("name");
+		String contactNo=request.getParameter("contactNo");
+		String batch=request.getParameter("batch");
+		String track=request.getParameter("track");
+		String email=request.getParameter("email");
+		String asn=request.getParameter("asn");
+		String gender=request.getParameter("gender");
+		ArrayList<Intern> interns=new ArrayList<>();
+		interns.add(intern);*/
+        String email=request.getParameter("email");
+		Boolean b= ri.isEmailIdExists(email);
+		session.setAttribute("emailExists", b);
+		response.sendRedirect("Register.jsp");
 	}
 
 }

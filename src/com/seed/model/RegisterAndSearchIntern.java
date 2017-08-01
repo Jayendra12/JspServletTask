@@ -101,5 +101,28 @@ public class RegisterAndSearchIntern {
 		}
 		return batchAndTrackList;		
 	}
-    
+   public boolean isEmailIdExists(String emailId){
+	   String sql="select emailId from intern";
+	   PreparedStatement stmt;
+	try {
+		stmt = con.prepareStatement(sql);
+		ResultSet rs=stmt.executeQuery();
+		
+		while(rs.next()){
+			String email=rs.getString("emailId");
+			if(emailId.equals(email)){
+				break;
+			}
+			
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return true;
+		
+		
+   }
+	
+	
 }
